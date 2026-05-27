@@ -4,7 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لعبة عيدية هنوش 🎁</title>
+
+<title>مهمة هنوش السرية 🎁</title>
 
 <style>
 
@@ -16,21 +17,21 @@ font-family:Arial;
 }
 
 body{
-background:linear-gradient(135deg,#ffb6d9,#ffe7a3);
-height:100vh;
+background:linear-gradient(135deg,#ffb7d8,#ffe8a6);
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
 padding:20px;
+overflow:hidden;
 }
 
 .game{
 width:100%;
-max-width:700px;
+max-width:750px;
 background:white;
-padding:30px;
 border-radius:35px;
+padding:35px;
 box-shadow:0 15px 40px rgba(0,0,0,.2);
 text-align:center;
 position:relative;
@@ -38,74 +39,100 @@ position:relative;
 
 h1{
 font-size:42px;
-color:#ff4081;
+color:#ff3d82;
 margin-bottom:10px;
 }
 
 .subtitle{
+font-size:18px;
 color:#666;
 margin-bottom:25px;
-font-size:18px;
+line-height:1.6;
+}
+
+.level{
+animation:fade .5s;
+}
+
+.challenge{
+background:#fff2f7;
+border:3px solid #ffc7da;
+padding:25px;
+border-radius:25px;
+font-size:24px;
+font-weight:bold;
+color:#444;
+margin-bottom:25px;
+line-height:1.7;
+}
+
+.answers{
+display:grid;
+grid-template-columns:1fr;
+gap:15px;
+}
+
+button{
+border:none;
+padding:18px;
+border-radius:18px;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+}
+
+.answer{
+background:#ffe0ec;
+}
+
+.answer:hover{
+background:#ffc6db;
+transform:scale(1.03);
 }
 
 .money{
-font-size:50px;
+font-size:55px;
 font-weight:bold;
 color:#00a651;
-margin:20px 0;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-}
-
-.card{
-background:#fff0f6;
-border:3px solid #ffc5d9;
-border-radius:25px;
-padding:30px 15px;
-cursor:pointer;
-transition:.25s;
-font-size:22px;
-font-weight:bold;
-}
-
-.card:hover{
-transform:scale(1.05) rotate(1deg);
-background:#ffdce9;
+margin-top:25px;
 }
 
 .message{
-margin-top:25px;
+margin-top:20px;
 font-size:22px;
 font-weight:bold;
+min-height:50px;
 color:#444;
-min-height:60px;
-}
-
-.next{
-margin-top:20px;
-background:#ff4f8d;
-color:white;
-border:none;
-padding:15px 35px;
-font-size:20px;
-border-radius:20px;
-cursor:pointer;
-display:none;
-}
-
-.next:hover{
-transform:scale(1.05);
 }
 
 .final{
-font-size:30px;
+font-size:32px;
 line-height:1.8;
-color:#ff4081;
+color:#ff3d82;
 animation:pulse 1s infinite;
+}
+
+.progress{
+height:18px;
+background:#ffe3ee;
+border-radius:20px;
+overflow:hidden;
+margin-bottom:25px;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ff4f8d,#ff84b2);
+transition:.5s;
+}
+
+.hearts{
+position:absolute;
+font-size:28px;
+animation:float 4s linear infinite;
+opacity:.7;
 }
 
 @keyframes pulse{
@@ -114,11 +141,15 @@ animation:pulse 1s infinite;
 100%{transform:scale(1)}
 }
 
-.hearts{
-position:absolute;
-font-size:30px;
-animation:float 4s linear infinite;
-opacity:.7;
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 @keyframes float{
@@ -135,18 +166,6 @@ opacity:0;
 }
 }
 
-@media(max-width:600px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-h1{
-font-size:32px;
-}
-
-}
-
 </style>
 </head>
 
@@ -154,11 +173,15 @@ font-size:32px;
 
 <div class="game">
 
-<h1>لعبة عيدية هنوش 🎁</h1>
+<h1>مهمة هنوش السرية 🎁</h1>
 
 <p class="subtitle">
-اختاري صح وكملي التحديات عشان توصلي للـ 1000 جنيه 💸
+كل اختيار هيحدد إذا كنتي هتوصلي للجائزة الكبرى ولا لا 😈💖
 </p>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
 
 <div id="content"></div>
 
@@ -169,47 +192,44 @@ font-size:32px;
 const levels = [
 
 {
-title:"اختاري الهدية الصح 🎀",
-cards:[
-{emoji:"🎁",win:100,msg:"بداية قوية +100 جنيه 😄"},
-{emoji:"📦",win:0,msg:"بوكس فاضي 😂"},
-{emoji:"💖",win:50,msg:"كيوت +50 جنيه"}
+q:"لو لقيتي صندوق عليه مكتوب (ممنوع الفتح) هتعملي ايه؟ 👀",
+answers:[
+{text:"هفتحه طبعًا 😎",money:250,msg:"روح المغامرة دي تستحق مكافأة 🔥"},
+{text:"هسيبه وامشي 😭",money:0,msg:"الكنوز مبتحبش الخوف 😂"}
 ]
 },
 
 {
-title:"فين الحظ؟ 🍀",
-cards:[
-{emoji:"⭐",win:200,msg:"نجمة الحظ +200 جنيه ✨"},
-{emoji:"☁️",win:0,msg:"السحابة بلعت الجائزة 😭"},
-{emoji:"🪙",win:100,msg:"لقيتي عملة ذهبية +100"}
+q:"في زر أحمر قدامك 🔴",
+answers:[
+{text:"اضغطه فورًا 😈",money:250,msg:"واضح إنك بتحبي المخاطرة 😎"},
+{text:"لا يمكن 😅",money:50,msg:"حذرة زيادة عن اللزوم 😂"}
 ]
 },
 
 {
-title:"اختاري بسرعة 😈",
-cards:[
-{emoji:"🔥",win:300,msg:"ولعة معاكي +300 🔥"},
-{emoji:"🧊",win:0,msg:"تلجت اللعبة 😂"},
-{emoji:"🎯",win:150,msg:"إصابة ممتازة +150"}
+q:"هنوش لقت خريطة كنز 🗺️",
+answers:[
+{text:"تروح تدور عليه 💎",money:250,msg:"مستوى الشجاعة ارتفع 🔥"},
+{text:"تبيع الخريطة 😭",money:100,msg:"تفكير تجاري بس ضيعتي المغامرة 😂"}
 ]
 },
 
 {
-title:"الجائزة الكبرى 👑",
-cards:[
-{emoji:"💎",win:400,msg:"مبرووووك الكنز الكبير 💎"},
-{emoji:"🐸",win:0,msg:"ضفدعة بدل الفلوس 😭"},
-{emoji:"👑",win:250,msg:"ملكة الحظ +250"}
+q:"آخر باب قبل الجائزة الكبرى 🚪",
+answers:[
+{text:"ادخلي بدون تفكير ❤️",money:250,msg:"مبرووووك وصلتي للكنز 🎉"},
+{text:"ارجعي تاني 😭",money:0,msg:"كان فاضل خطوة بس 😂"}
 ]
 }
 
 ];
 
-let level=0;
+let current=0;
 let total=0;
 
 const content=document.getElementById("content");
+const bar=document.getElementById("bar");
 
 function hearts(){
 
@@ -222,13 +242,12 @@ h.innerHTML="💖";
 
 h.style.left=Math.random()*100+"%";
 h.style.bottom="-20px";
-h.style.animationDuration=(Math.random()*2+3)+"s";
 
 document.body.appendChild(h);
 
 setTimeout(()=>{
 h.remove();
-},5000);
+},4000);
 
 }
 
@@ -236,26 +255,26 @@ h.remove();
 
 function render(){
 
-if(level>=levels.length){
+bar.style.width=`${(current/levels.length)*100}%`;
+
+if(current>=levels.length){
 
 content.innerHTML=`
+
+<div class="level">
 
 <div class="money">
 ${total} جنيه 💸
 </div>
 
 <div class="final">
-يا هنوش انتي كسبتي اللعبة 🎉❤️
+يا هنوش ❤️<br>
+انتي خلصتي المهمة السرية بنجاح 🎉
 <br>
 ووصلتي للجائزة الكبرى
 </div>
 
-<br>
-
-<button class="next" style="display:inline-block"
-onclick="location.reload()">
-العبي تاني 😄
-</button>
+</div>
 
 `;
 
@@ -265,24 +284,26 @@ return;
 
 }
 
-const l=levels[level];
+const level=levels[current];
 
 content.innerHTML=`
 
-<h2 style="margin-bottom:20px;color:#444">
-${l.title}
-</h2>
+<div class="level">
 
-<div class="grid">
-
-${l.cards.map((c,i)=>`
-
-<div class="card"
-onclick="pick(${i})">
-
-${c.emoji}
-
+<div class="challenge">
+${level.q}
 </div>
+
+<div class="answers">
+
+${level.answers.map((a,i)=>`
+
+<button class="answer"
+onclick="choose(${i})">
+
+${a.text}
+
+</button>
 
 `).join("")}
 
@@ -294,45 +315,42 @@ ${c.emoji}
 ${total} جنيه
 </div>
 
-<button class="next" id="next"
-onclick="nextLevel()">
-المستوى اللي بعده 🚀
-</button>
+</div>
 
 `;
 
 }
 
-function pick(i){
+function choose(i){
 
-const current=levels[level];
+const level=levels[current];
 
-const result=current.cards[i];
+const answer=level.answers[i];
 
-total+=result.win;
+total+=answer.money;
 
-document.getElementById("message").innerHTML=result.msg;
+document.getElementById("message").innerHTML=
+answer.msg;
 
 document.querySelector(".money").innerHTML=
 `${total} جنيه 💸`;
 
-document.getElementById("next").style.display="inline-block";
-
-if(result.win>0){
 hearts();
-}
 
-document.querySelectorAll(".card").forEach(card=>{
-card.style.pointerEvents="none";
+document.querySelectorAll(".answer")
+.forEach(btn=>{
+
+btn.disabled=true;
+
 });
 
-}
+setTimeout(()=>{
 
-function nextLevel(){
-
-level++;
+current++;
 
 render();
+
+},1800);
 
 }
 
@@ -341,4 +359,5 @@ render();
 </script>
 
 </body>
+
 </html>

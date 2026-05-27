@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>متاهة هنوش الكبرى 🎮</title>
+<title>مغامرة هنوش 🎮</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -19,58 +19,55 @@ font-family:'Cairo',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#ff4f8d,#ff89b5,#ffd86f);
+background:linear-gradient(135deg,#ff4f8d,#ff9ec4,#ffd76f);
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:20px;
+padding:15px;
 overflow:hidden;
 }
 
 .game{
 width:100%;
-max-width:850px;
-background:rgba(255,255,255,.14);
+max-width:700px;
+background:rgba(255,255,255,.16);
 backdrop-filter:blur(18px);
 border-radius:35px;
-padding:30px;
+padding:25px;
 box-shadow:0 20px 60px rgba(0,0,0,.25);
 color:white;
+text-align:center;
 position:relative;
 overflow:hidden;
 }
 
 .title{
-text-align:center;
-font-size:45px;
+font-size:42px;
 font-weight:900;
 margin-bottom:10px;
 }
 
 .subtitle{
-text-align:center;
 opacity:.9;
-margin-bottom:20px;
-font-size:18px;
 line-height:1.7;
+margin-bottom:20px;
 }
 
-.info{
+.stats{
 display:flex;
 justify-content:space-between;
-align-items:center;
+gap:10px;
 margin-bottom:20px;
-gap:15px;
-flex-wrap:wrap;
 }
 
 .box{
+flex:1;
 background:rgba(255,255,255,.15);
-padding:12px 20px;
+padding:12px;
 border-radius:18px;
-font-size:20px;
-font-weight:700;
+font-weight:bold;
+font-size:18px;
 }
 
 .grid{
@@ -78,68 +75,41 @@ display:grid;
 grid-template-columns:repeat(5,1fr);
 gap:10px;
 margin-top:20px;
+touch-action:none;
 }
 
 .cell{
 aspect-ratio:1;
+background:rgba(255,255,255,.12);
 border-radius:18px;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:30px;
-font-weight:bold;
-background:rgba(255,255,255,.1);
+font-size:28px;
 transition:.25s;
 }
 
 .player{
-background:#fff3a6 !important;
-color:#ff4f8d;
+background:#fff2a7 !important;
 transform:scale(1.08);
-box-shadow:0 0 20px rgba(255,255,255,.7);
 }
 
 .goal{
-background:#6dffb3 !important;
-color:#004d28;
+background:#5cffb2 !important;
 animation:pulse 1s infinite;
 }
 
-.trap{
-background:#ff8da1 !important;
-}
-
-.controls{
-display:grid;
-grid-template-columns:repeat(3,80px);
-justify-content:center;
-gap:12px;
-margin-top:30px;
-}
-
-.btn{
-height:75px;
-border:none;
-border-radius:22px;
-background:rgba(255,255,255,.18);
-color:white;
-font-size:28px;
-cursor:pointer;
-transition:.2s;
-backdrop-filter:blur(5px);
-}
-
-.btn:hover{
-transform:scale(1.08);
-background:rgba(255,255,255,.3);
-}
-
 .message{
-margin-top:25px;
-text-align:center;
-font-size:24px;
-font-weight:700;
+margin-top:20px;
+font-size:22px;
+font-weight:bold;
 min-height:40px;
+}
+
+.help{
+margin-top:18px;
+font-size:17px;
+opacity:.9;
 }
 
 .restart{
@@ -147,7 +117,7 @@ margin-top:20px;
 width:100%;
 padding:18px;
 border:none;
-border-radius:22px;
+border-radius:20px;
 background:white;
 color:#ff4f8d;
 font-size:22px;
@@ -158,23 +128,8 @@ display:none;
 
 .spark{
 position:absolute;
-font-size:28px;
+font-size:30px;
 animation:up 4s linear infinite;
-pointer-events:none;
-}
-
-@keyframes up{
-0%{
-transform:translateY(0) scale(.5);
-opacity:0;
-}
-50%{
-opacity:1;
-}
-100%{
-transform:translateY(-900px) scale(1.4);
-opacity:0;
-}
 }
 
 @keyframes pulse{
@@ -183,25 +138,18 @@ opacity:0;
 100%{transform:scale(1)}
 }
 
-@media(max-width:700px){
-
-.grid{
-grid-template-columns:repeat(5,1fr);
+@keyframes up{
+0%{
+transform:translateY(0);
+opacity:0;
 }
-
-.controls{
-grid-template-columns:repeat(3,70px);
+50%{
+opacity:1;
 }
-
-.btn{
-height:65px;
-font-size:24px;
+100%{
+transform:translateY(-800px);
+opacity:0;
 }
-
-.title{
-font-size:35px;
-}
-
 }
 
 </style>
@@ -212,53 +160,33 @@ font-size:35px;
 <div class="game">
 
 <div class="title">
-متاهة هنوش الكبرى 🎮
+مغامرة هنوش 🎮
 </div>
 
 <div class="subtitle">
-وصلي للكنز 💎 بدون ما تقعي في الفخاخ 😈
+اسحبي بإيدك على الشاشة عشان توصلي للكنز بدون فخاخ 😈💎
 </div>
 
-<div class="info">
+<div class="stats">
 
 <div class="box">
 المستوى: <span id="level">1</span>
 </div>
 
 <div class="box">
-العيدية: <span id="money">0</span> جنيه 💸
+العيدية: <span id="money">0</span> 💸
 </div>
 
 </div>
 
 <div class="grid" id="grid"></div>
 
-<div class="controls">
-
-<div></div>
-
-<button class="btn" onclick="move('up')">
-⬆️
-</button>
-
-<div></div>
-
-<button class="btn" onclick="move('left')">
-⬅️
-</button>
-
-<button class="btn" onclick="move('down')">
-⬇️
-</button>
-
-<button class="btn" onclick="move('right')">
-➡️
-</button>
-
+<div class="message" id="message">
+ابدأي السحب على الشاشة 😎
 </div>
 
-<div class="message" id="message">
-ابدأي المهمة 😎
+<div class="help">
+⬅️➡️⬆️⬇️ اسحبي بإصبعك للتحرك
 </div>
 
 <button class="restart" id="restart"
@@ -285,11 +213,9 @@ let traps=[];
 
 const grid=document.getElementById("grid");
 
-function random(min,max){
+function rand(a,b){
 
-return Math.floor(
-Math.random()*(max-min+1)
-)+min;
+return Math.floor(Math.random()*(b-a+1))+a;
 
 }
 
@@ -299,17 +225,15 @@ traps=[];
 
 for(let i=0;i<level+2;i++){
 
-let tx=random(0,4);
-let ty=random(0,4);
+let tx=rand(0,4);
+let ty=rand(0,4);
 
 if(
 (tx===0&&ty===0)||
 (tx===4&&ty===4)
 ){
-
 i--;
 continue;
-
 }
 
 traps.push({x:tx,y:ty});
@@ -346,14 +270,6 @@ cell.innerHTML="💎";
 
 }
 
-else if(
-traps.some(t=>t.x===x&&t.y===y)
-){
-
-cell.innerHTML="❓";
-
-}
-
 else{
 
 cell.innerHTML="";
@@ -370,13 +286,13 @@ grid.appendChild(cell);
 
 function sparkles(){
 
-for(let i=0;i<18;i++){
+for(let i=0;i<15;i++){
 
 const s=document.createElement("div");
 
 s.className="spark";
 
-const arr=["💖","✨","💸","🎉"];
+const arr=["✨","💖","💸","🎉"];
 
 s.innerHTML=
 arr[Math.floor(Math.random()*arr.length)];
@@ -425,12 +341,14 @@ if(trap){
 
 document.getElementById("message")
 .innerHTML=
-"وقعتي في الفخ 😭";
+"اوووبس 😭 وقعتي في فخ";
 
 money=Math.max(0,money-100);
 
 document.getElementById("money")
 .innerHTML=money;
+
+navigator.vibrate(200);
 
 player={x:0,y:0};
 
@@ -450,7 +368,7 @@ document.getElementById("money")
 
 document.getElementById("message")
 .innerHTML=
-`مبرووووك خلصتي المستوى ${level} 🎉`;
+`مبروك خلصتي المستوى ${level} 🎉`;
 
 sparkles();
 
@@ -461,7 +379,7 @@ document.getElementById("level")
 
 if(level>5){
 
-winGame();
+win();
 return;
 
 }
@@ -476,11 +394,11 @@ createLevel();
 
 }
 
-function winGame(){
+function win(){
 
 document.getElementById("message")
 .innerHTML=
-`يا هنوش ❤️ كسبتي ${money} جنيه ووصلتي للكنز الكبير 🎁`;
+`يا هنوش ❤️ كسبتي ${money} جنيه ووصلتي للكنز 💎`;
 
 document.getElementById("restart")
 .style.display="block";
@@ -497,26 +415,57 @@ money=0;
 player={x:0,y:0};
 
 document.getElementById("level")
-.innerHTML=level;
+.innerHTML=1;
 
 document.getElementById("money")
-.innerHTML=money;
+.innerHTML=0;
 
 document.getElementById("restart")
 .style.display="none";
 
 document.getElementById("message")
 .innerHTML=
-"ابدأي المهمة 😎";
+"ابدأي السحب على الشاشة 😎";
 
 createLevel();
 
 }
+
+let startX=0;
+let startY=0;
+
+grid.addEventListener("touchstart",e=>{
+
+startX=e.touches[0].clientX;
+startY=e.touches[0].clientY;
+
+});
+
+grid.addEventListener("touchend",e=>{
+
+let endX=e.changedTouches[0].clientX;
+let endY=e.changedTouches[0].clientY;
+
+let dx=endX-startX;
+let dy=endY-startY;
+
+if(Math.abs(dx)>Math.abs(dy)){
+
+if(dx>30) move("right");
+else if(dx<-30) move("left");
+
+}else{
+
+if(dy>30) move("down");
+else if(dy<-30) move("up");
+
+}
+
+});
 
 startGame();
 
 </script>
 
 </body>
-
 </html>

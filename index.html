@@ -5,7 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>مهمة هنوش السرية 🎁</title>
+<title>مهمة هنوش الكبرى 🎁</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 
@@ -13,138 +15,217 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial;
+font-family:'Cairo',sans-serif;
 }
 
 body{
-background:linear-gradient(135deg,#ffb7d8,#ffe8a6);
 min-height:100vh;
+background:
+linear-gradient(135deg,#ff4f8d,#ff89b5,#ffd86f);
 display:flex;
 justify-content:center;
 align-items:center;
 padding:20px;
 overflow:hidden;
-}
-
-.game{
-width:100%;
-max-width:750px;
-background:white;
-border-radius:35px;
-padding:35px;
-box-shadow:0 15px 40px rgba(0,0,0,.2);
-text-align:center;
 position:relative;
 }
 
-h1{
-font-size:42px;
-color:#ff3d82;
+.bg{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:0;
+}
+
+.circle{
+position:absolute;
+border-radius:50%;
+background:rgba(255,255,255,.15);
+animation:float 12s infinite linear;
+}
+
+.circle:nth-child(1){
+width:200px;
+height:200px;
+top:10%;
+left:5%;
+}
+
+.circle:nth-child(2){
+width:300px;
+height:300px;
+bottom:5%;
+right:5%;
+animation-duration:15s;
+}
+
+.circle:nth-child(3){
+width:120px;
+height:120px;
+bottom:20%;
+left:20%;
+animation-duration:9s;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0) rotate(0deg);
+}
+50%{
+transform:translateY(-30px) rotate(180deg);
+}
+100%{
+transform:translateY(0) rotate(360deg);
+}
+}
+
+.game{
+position:relative;
+z-index:1;
+width:100%;
+max-width:760px;
+background:rgba(255,255,255,.18);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.25);
+border-radius:35px;
+padding:35px;
+box-shadow:0 20px 50px rgba(0,0,0,.25);
+text-align:center;
+color:white;
+}
+
+.title{
+font-size:48px;
+font-weight:900;
 margin-bottom:10px;
+text-shadow:0 3px 10px rgba(0,0,0,.2);
 }
 
 .subtitle{
 font-size:18px;
-color:#666;
-margin-bottom:25px;
-line-height:1.6;
-}
-
-.level{
-animation:fade .5s;
-}
-
-.challenge{
-background:#fff2f7;
-border:3px solid #ffc7da;
-padding:25px;
-border-radius:25px;
-font-size:24px;
-font-weight:bold;
-color:#444;
-margin-bottom:25px;
-line-height:1.7;
-}
-
-.answers{
-display:grid;
-grid-template-columns:1fr;
-gap:15px;
-}
-
-button{
-border:none;
-padding:18px;
-border-radius:18px;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-transition:.25s;
-}
-
-.answer{
-background:#ffe0ec;
-}
-
-.answer:hover{
-background:#ffc6db;
-transform:scale(1.03);
-}
-
-.money{
-font-size:55px;
-font-weight:bold;
-color:#00a651;
-margin-top:25px;
-}
-
-.message{
-margin-top:20px;
-font-size:22px;
-font-weight:bold;
-min-height:50px;
-color:#444;
-}
-
-.final{
-font-size:32px;
+opacity:.95;
 line-height:1.8;
-color:#ff3d82;
-animation:pulse 1s infinite;
+margin-bottom:25px;
 }
 
 .progress{
 height:18px;
-background:#ffe3ee;
+background:rgba(255,255,255,.2);
 border-radius:20px;
 overflow:hidden;
-margin-bottom:25px;
+margin-bottom:30px;
 }
 
 .bar{
 height:100%;
 width:0%;
-background:linear-gradient(90deg,#ff4f8d,#ff84b2);
+background:linear-gradient(90deg,#fff,#ffe48f);
 transition:.5s;
 }
 
-.hearts{
+.question{
+font-size:30px;
+font-weight:700;
+line-height:1.8;
+margin-bottom:30px;
+animation:fade .4s;
+}
+
+.answers{
+display:grid;
+gap:15px;
+}
+
+.answer{
+padding:18px;
+border:none;
+border-radius:20px;
+background:rgba(255,255,255,.18);
+color:white;
+font-size:20px;
+font-weight:700;
+cursor:pointer;
+transition:.25s;
+backdrop-filter:blur(5px);
+border:1px solid rgba(255,255,255,.2);
+}
+
+.answer:hover{
+transform:translateY(-3px) scale(1.02);
+background:rgba(255,255,255,.28);
+}
+
+.money{
+font-size:60px;
+font-weight:900;
+margin-top:30px;
+color:#fff4b3;
+text-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.message{
+margin-top:18px;
+font-size:22px;
+font-weight:700;
+min-height:40px;
+}
+
+.final{
+font-size:34px;
+line-height:2;
+font-weight:900;
+animation:pulse 1.2s infinite;
+}
+
+.restart{
+margin-top:30px;
+padding:18px 35px;
+border:none;
+border-radius:20px;
+background:white;
+color:#ff4f8d;
+font-size:22px;
+font-weight:900;
+cursor:pointer;
+transition:.3s;
+}
+
+.restart:hover{
+transform:scale(1.05);
+}
+
+.spark{
 position:absolute;
-font-size:28px;
-animation:float 4s linear infinite;
-opacity:.7;
+font-size:30px;
+animation:up 4s linear infinite;
+pointer-events:none;
+}
+
+@keyframes up{
+0%{
+transform:translateY(0) scale(.5);
+opacity:0;
+}
+50%{
+opacity:1;
+}
+100%{
+transform:translateY(-900px) scale(1.4);
+opacity:0;
+}
 }
 
 @keyframes pulse{
 0%{transform:scale(1)}
-50%{transform:scale(1.05)}
+50%{transform:scale(1.04)}
 100%{transform:scale(1)}
 }
 
 @keyframes fade{
 from{
 opacity:0;
-transform:translateY(20px);
+transform:translateY(15px);
 }
 to{
 opacity:1;
@@ -152,18 +233,24 @@ transform:translateY(0);
 }
 }
 
-@keyframes float{
-0%{
-transform:translateY(0);
-opacity:0;
+@media(max-width:650px){
+
+.title{
+font-size:36px;
 }
-50%{
-opacity:1;
+
+.question{
+font-size:24px;
 }
-100%{
-transform:translateY(-800px);
-opacity:0;
+
+.answer{
+font-size:18px;
 }
+
+.money{
+font-size:45px;
+}
+
 }
 
 </style>
@@ -171,13 +258,21 @@ opacity:0;
 
 <body>
 
+<div class="bg">
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+</div>
+
 <div class="game">
 
-<h1>مهمة هنوش السرية 🎁</h1>
+<div class="title">
+مهمة هنوش الكبرى 🎁
+</div>
 
-<p class="subtitle">
-كل اختيار هيحدد إذا كنتي هتوصلي للجائزة الكبرى ولا لا 😈💖
-</p>
+<div class="subtitle">
+كل قرار هيقربك من الجائزة الكبرى أو يضيعها منك 😈💖
+</div>
 
 <div class="progress">
 <div class="bar" id="bar"></div>
@@ -189,64 +284,103 @@ opacity:0;
 
 <script>
 
-const levels = [
+const questionSets = [
 
+[
 {
-q:"لو لقيتي صندوق عليه مكتوب (ممنوع الفتح) هتعملي ايه؟ 👀",
+q:"لقيتي زر مكتوب عليه (ممنوع الضغط) 🔴",
 answers:[
-{text:"هفتحه طبعًا 😎",money:250,msg:"روح المغامرة دي تستحق مكافأة 🔥"},
-{text:"هسيبه وامشي 😭",money:0,msg:"الكنوز مبتحبش الخوف 😂"}
+{text:"أضغطه فورًا 😈",money:250,msg:"واضح إنك بتحبي المغامرة 🔥"},
+{text:"مستحيل ألمسه 😭",money:50,msg:"الأمان حلو بس ضيعتي الإثارة 😂"}
 ]
 },
 
 {
-q:"في زر أحمر قدامك 🔴",
+q:"قدامك شنطتين 💼",
 answers:[
-{text:"اضغطه فورًا 😈",money:250,msg:"واضح إنك بتحبي المخاطرة 😎"},
-{text:"لا يمكن 😅",money:50,msg:"حذرة زيادة عن اللزوم 😂"}
+{text:"الشنطة السودا 🖤",money:300,msg:"اختيار ذكي جدًا 💎"},
+{text:"الشنطة القديمة 📦",money:100,msg:"فيها فلوس بس قليلة 😅"}
 ]
 },
 
 {
-q:"هنوش لقت خريطة كنز 🗺️",
+q:"الباب الأخير للكنز 🚪",
 answers:[
-{text:"تروح تدور عليه 💎",money:250,msg:"مستوى الشجاعة ارتفع 🔥"},
-{text:"تبيع الخريطة 😭",money:100,msg:"تفكير تجاري بس ضيعتي المغامرة 😂"}
-]
-},
-
-{
-q:"آخر باب قبل الجائزة الكبرى 🚪",
-answers:[
-{text:"ادخلي بدون تفكير ❤️",money:250,msg:"مبرووووك وصلتي للكنز 🎉"},
-{text:"ارجعي تاني 😭",money:0,msg:"كان فاضل خطوة بس 😂"}
+{text:"ادخلي بسرعة ❤️",money:450,msg:"مبروووك قربتي من الجائزة الكبرى 🎉"},
+{text:"استني شوية 👀",money:0,msg:"التردد ضيع الفرصة 😭"}
 ]
 }
+],
+
+[
+{
+q:"فيه صندوق بيطلع صوت غريب 🎁",
+answers:[
+{text:"افتحيه 😎",money:250,msg:"طلع فيه مفاجأة جامدة 🔥"},
+{text:"اهربي 😂",money:0,msg:"ضيعتي الكنز 😭"}
+]
+},
+
+{
+q:"اختاري بطاقة حظ 🍀",
+answers:[
+{text:"البطاقة الذهبية ✨",money:350,msg:"الحظ بيحبك 😎"},
+{text:"البطاقة الرمادية 😅",money:100,msg:"جائزة بسيطة بس مقبولة 😂"}
+]
+},
+
+{
+q:"آخر خطوة قبل الفوز 👑",
+answers:[
+{text:"كملي للنهاية 💖",money:400,msg:"مبرووووك الفوز الكبير 🎉"},
+{text:"خلاص كفاية 😭",money:50,msg:"كان فاضل خطوة واحدة 😂"}
+]
+}
+]
 
 ];
 
+let currentSet=[];
 let current=0;
 let total=0;
 
 const content=document.getElementById("content");
 const bar=document.getElementById("bar");
 
-function hearts(){
+function randomGame(){
 
-for(let i=0;i<15;i++){
+currentSet =
+questionSets[
+Math.floor(Math.random()*questionSets.length)
+];
 
-const h=document.createElement("div");
+current=0;
+total=0;
 
-h.className="hearts";
-h.innerHTML="💖";
+render();
 
-h.style.left=Math.random()*100+"%";
-h.style.bottom="-20px";
+}
 
-document.body.appendChild(h);
+function sparkles(){
+
+for(let i=0;i<18;i++){
+
+const s=document.createElement("div");
+
+s.className="spark";
+
+const arr=["💖","✨","🎉","💸"];
+
+s.innerHTML=
+arr[Math.floor(Math.random()*arr.length)];
+
+s.style.left=Math.random()*100+"%";
+s.style.bottom="-30px";
+
+document.body.appendChild(s);
 
 setTimeout(()=>{
-h.remove();
+s.remove();
 },4000);
 
 }
@@ -255,13 +389,12 @@ h.remove();
 
 function render(){
 
-bar.style.width=`${(current/levels.length)*100}%`;
+bar.style.width=
+`${(current/currentSet.length)*100}%`;
 
-if(current>=levels.length){
+if(current>=currentSet.length){
 
 content.innerHTML=`
-
-<div class="level">
 
 <div class="money">
 ${total} جنيه 💸
@@ -269,28 +402,30 @@ ${total} جنيه 💸
 
 <div class="final">
 يا هنوش ❤️<br>
-انتي خلصتي المهمة السرية بنجاح 🎉
-<br>
+انتي خلصتي المهمة بنجاح 🎉<br>
 ووصلتي للجائزة الكبرى
 </div>
 
-</div>
+<button class="restart"
+onclick="randomGame()">
+
+إعادة اللعبة 🔄
+
+</button>
 
 `;
 
-hearts();
+sparkles();
 
 return;
 
 }
 
-const level=levels[current];
+const level=currentSet[current];
 
 content.innerHTML=`
 
-<div class="level">
-
-<div class="challenge">
+<div class="question">
 ${level.q}
 </div>
 
@@ -315,32 +450,32 @@ ${a.text}
 ${total} جنيه
 </div>
 
-</div>
-
 `;
 
 }
 
 function choose(i){
 
-const level=levels[current];
+const level=currentSet[current];
 
 const answer=level.answers[i];
 
 total+=answer.money;
 
-document.getElementById("message").innerHTML=
-answer.msg;
+document.getElementById("message")
+.innerHTML=answer.msg;
 
-document.querySelector(".money").innerHTML=
-`${total} جنيه 💸`;
+document.querySelector(".money")
+.innerHTML=`${total} جنيه 💸`;
 
-hearts();
+sparkles();
 
 document.querySelectorAll(".answer")
 .forEach(btn=>{
 
 btn.disabled=true;
+
+btn.style.opacity=".6";
 
 });
 
@@ -350,14 +485,13 @@ current++;
 
 render();
 
-},1800);
+},1700);
 
 }
 
-render();
+randomGame();
 
 </script>
 
 </body>
-
 </html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hanosh Eidiyah Quest</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffd6e7, #fff1c9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      background: white;
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: #ff3b7f;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .box {
+      background: #fff;
+      border: 2px solid #ffd1e0;
+      border-radius: 25px;
+      padding: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .box:hover {
+      transform: scale(1.05);
+    }
+
+    .opened {
+      background: #fff0f6;
+    }
+
+    .gift {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    .reward {
+      margin-top: 15px;
+      background: #d9ffe4;
+      color: #009944;
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .result {
+      background: linear-gradient(135deg, #ff4d88, #ff7ca8);
+      color: white;
+      border-radius: 25px;
+      padding: 25px;
+    }
+
+    .total {
+      font-size: 45px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .final {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.2);
+      padding: 15px;
+      border-radius: 15px;
+      font-size: 20px;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    @media(max-width: 600px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>لعبة عيدية هنوش 🎁</h1>
+    <p class="subtitle">كل صندوق فيه مفاجأة وعيدية مختلفة ✨</p>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="result">
+      <p id="message">اختاري صندوق وافتحيه 🎀</p>
+      <div class="total" id="total">0 جنيه</div>
+      <div class="final" id="final" style="display:none;">
+        مبروك يا هنوش ❤️<br>
+        وصلتي لأقصى عيدية 1000 جنيه 🎉
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const boxes = [
+      {
+        title: 'رسالة لطيفة 💌',
+        text: 'يا هنوش وجودك بيخلي اليوم ألطف بكتير ❤️',
+        reward: 100
+      },
+      {
+        title: 'بوكس الحظ ✨',
+        text: 'واضح إن الحظ معاكي النهارده 😎',
+        reward: 200
+      },
+      {
+        title: 'بوكس الدلع 🎀',
+        text: 'الابتسامة دي تستحق جايزة مخصوص 😄',
+        reward: 300
+      },
+      {
+        title: 'الصندوق السري 👀',
+        text: 'مبروك وصلتي للجايزة الكبرى 💸',
+        reward: 400
+      }
+    ];
+
+    const grid = document.getElementById('grid');
+    const totalEl = document.getElementById('total');
+    const messageEl = document.getElementById('message');
+    const finalEl = document.getElementById('final');
+
+    let total = 0;
+    let opened = 0;
+
+    boxes.forEach((box) => {
+      const div = document.createElement('div');
+      div.className = 'box';
+
+      div.innerHTML = `
+        <div class="gift">🎁</div>
+        <h3>صندوق سري</h3>
+      `;
+
+      div.onclick = () => {
+        if(div.classList.contains('opened')) return;
+
+        div.classList.add('opened');
+
+        total += box.reward;
+        opened++;
+
+        div.innerHTML = `
+          <h3>${box.title}</h3>
+          <p style="margin-top:10px;color:#666">${box.text}</p>
+          <div class="reward">+${box.reward} جنيه</div>
+        `;
+
+        totalEl.innerText = `${total} جنيه 💸`;
+        messageEl.innerText = box.text;
+
+        if(opened === boxes.length) {
+          finalEl.style.display = 'block';
+        }
+      };
+
+      grid.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>
